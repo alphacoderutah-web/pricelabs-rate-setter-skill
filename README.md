@@ -8,7 +8,20 @@ financial detail and live pricing strategy.
 
 | Skill | What it does |
 |---|---|
-| `pricelabs-rate-setter` | The sanctioned path from "we should change a price" to a price actually changing. Pins the unit, forces a dry run, reads the guard's verdict, handles per-change human approval, verifies the read-back, and covers rollback. |
+| `pricelabs-rate-setter` | **FreeWyld internal.** The sanctioned path from "we should change a price" to a price actually changing, for this portfolio's own units. Pins the unit, forces a dry run, reads the guard's verdict, handles per-change human approval, verifies the read-back, and covers rollback. |
+
+## Using this on another portfolio
+
+Don't. This variant is wired to the FreeWyld Agent project's `lib/guard.py`,
+`scripts/set_rates.py` and `analysis/AUTONOMY-MODE.json`, and its description names this
+portfolio's specific units so it only triggers here.
+
+A portable version that ships its own tooling and works with any OwnerRez + PriceLabs
+account lives at
+**[ownerrez-rate-setter-skill](https://github.com/alphacoderutah-web/ownerrez-rate-setter-skill)**.
+Same discipline — guard that fails closed, dry run by default, per-change approval, verified
+read-back, rollback — plus a `pricing-judgment.md` covering the mistakes that produced those
+rules.
 
 ## Installing
 

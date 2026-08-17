@@ -1,11 +1,13 @@
 ---
 name: pricelabs-rate-setter
-description: Set or roll back base and minimum prices in PriceLabs for any FreeWyld property, safely, through the write guard. Use whenever someone wants to change a rate — "raise 22 Cinnamon to 440", "put Jacksonville's base at 250", "the fee came off 505, reprice it", "undo yesterday's change", "why was that price change rejected?", "can we apply the shadow report's recommendation?" — and also when a rate change is merely implied by a pricing decision that has just been agreed. Covers pinning the unit, the mandatory dry run, reading the guard's verdict, per-change human approval, read-back verification, and rollback. Never raises its own authority.
+description: FreeWyld / Saint Augustine Vacations INTERNAL rate setter. Sets or rolls back base and minimum prices for this portfolio's own units — the Cinnamon Beach homes (22, 224, 530, 537 Family Tides, 540, 546, 7 Palms), Vilano Beach (206 Dream Beach Haven, 505 Beachside Getaway, 604), St. George (266 and 309 Zion's, 370 Desert Haven, 553 Vida Sol) and 124 Jacksonville — by driving lib/guard.py and scripts/set_rates.py inside the FreeWyld Agent project. Use when a rate change names one of those units, or when applying a recommendation from a shadow run in this project. Requires that project's code and .env; it does not work standalone. For any OTHER OwnerRez + PriceLabs portfolio, use the portable `ownerrez-rate-setter` skill instead.
 ---
 
-# PriceLabs rate setter
+# PriceLabs rate setter (FreeWyld internal)
 
-This is the only sanctioned path from "we should change a price" to a price actually changing. Its companion skill `ownerrez-listing-builder` deliberately refuses to touch rates; this is where that work lands.
+The only sanctioned path from "we should change a price" to a price actually changing — **for this portfolio**. Its companion skill `ownerrez-listing-builder` deliberately refuses to touch rates; this is where that work lands.
+
+> **Which skill is this?** This one is wired to the FreeWyld Agent project: it drives that repo's `lib/guard.py`, `scripts/set_rates.py` and `analysis/AUTONOMY-MODE.json`, and knows this portfolio's specific units and history. If the portfolio in question is somebody else's, stop and use **`ownerrez-rate-setter`** instead — same discipline, ships its own tooling, works anywhere.
 
 A booking taken at a wrong rate cannot be recalled. That asymmetry — cheap to be slow, expensive to be wrong — is why every part of this runs through `lib/guard.py`, and why the guard's refusals matter more than its approvals.
 
